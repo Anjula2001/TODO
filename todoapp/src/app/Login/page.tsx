@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react"; 
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,25 +45,37 @@ export default function Login() {
           onSubmit={handleLogin}
           className="w-[300px] flex flex-col items-center"
         >
-          <h3 className="mb-6 text-2xl text-gray-800 font-medium">User Login</h3>
+            <h3 className="mb-6 text-2xl text-gray-800 font-medium">User Login</h3>
+            
+            <input
+                type="text"
+                placeholder="Enter User Name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full mb-6 px-4 py-3 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
+            />
+          <div className="relative w-full mb-5">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-3 pr-10 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
+                />
 
-          <input
-            type="text"
-            placeholder="Enter User Name"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full mb-6 px-4 py-3 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
-          />
-          
-
-          <input
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full mb-8 px-4 py-3 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
-          />
-
+                {/* 👁 Show/Hide Button */}
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-teal-600"
+                >
+                    {showPassword ? (
+                    <EyeOffIcon className="w-5 h-5" />
+                    ) : (
+                    <EyeIcon className="w-5 h-5" />
+                    )}
+                </button>
+            </div>
           <button
             type="submit"
             className="w-3/4 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg transition-all"
