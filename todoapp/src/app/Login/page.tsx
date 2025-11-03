@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react"; 
+import {useFormStatus} from "react-dom";
+import { login } from "./actions";
 
 export default function Login() {
+  const [state, loginAction]= useActionState(login, undefined )
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -42,11 +45,13 @@ export default function Login() {
 
         {/* Login Form */}
         <form
+          action={loginAction}
           onSubmit={handleLogin}
           className="w-[300px] flex flex-col items-center"
         >
             <h3 className="mb-6 text-2xl text-gray-800 font-medium">User Login</h3>
             
+            {/* Username */}
             <input
                 type="text"
                 placeholder="Enter User Name"
@@ -54,7 +59,9 @@ export default function Login() {
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full mb-6 px-4 py-3 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
             />
-          <div className="relative w-full mb-5">
+
+            {/* Password */}
+            <div className="relative w-full mb-5">
                 <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter Password"
@@ -76,30 +83,44 @@ export default function Login() {
                     )}
                 </button>
             </div>
-          <button
-            type="submit"
-            className="w-3/4 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg transition-all"
-          >
-            Login
-          </button>
+            
+            <button
+                type="submit"
+                className="w-3/4 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg transition-all"
+                >
+                Login
+            </button>
 
-          <p className="mt-3 text-sm text-teal-600 cursor-pointer hover:underline">
-            Can’t remember your password?
-          </p>
+            <p className="mt-3 text-sm text-teal-600 cursor-pointer hover:underline"> 
+                <a href="/PasswordManagement">
+                    Can’t remember your password?
+                </a>
+            </p>
 
-          <p className="mt-5 text-sm text-gray-600">
-            New here? Sign up and get started!
-          </p>
-
-          <button
-            type="button"
-            className="mt-3 w-3/4 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg transition-all"
-          >
-            Sign Up
-          </button>
+            <p className="mt-5 text-sm text-gray-600">
+                New here? Sign up and get started!
+            </p>
+            
+            <button
+                onClick={() => window.open('/Register', '_blank')}
+                type="button"
+                className="mt-3 w-3/4 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg transition-all"
+            > 
+                Sign Up
+            </button>
+            
         </form>
       </div>
     </div>
   );
+}
+
+function SubmitButton(){
+    const { pending }= useFormStatus();
+    return(
+        <button disabled={pending} type="submit">
+            Login
+        </button>
+    );  
 }
 
