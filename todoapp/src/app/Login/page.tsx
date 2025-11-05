@@ -2,24 +2,24 @@
 
 import { useActionState, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react"; 
-import {useFormStatus} from "react-dom";
+//import {useFormStatus} from "react-dom"; 
 import { login } from "./actions";
 
-export default function Login() {
-  const [state, loginAction]= useActionState(login, undefined )
+export default function LoginForm() {
+  const [state, loginAction] = useActionState(login, undefined);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  /*const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Username:", username, "Password:", password);
-  };
+  };*/
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-white">
       {/* Left section */}
-      <div className="flex-[1] bg-teal-500 text-black flex flex-col justify-center px-16">
+      <div className="flex-[1] bg-teal-500 text-black flex flex-col justify-center px-16 rounded-r-[30px]">
         <h1 className="text-7xl font-bold mb-6">TODO.</h1>
         <hr className="border-t-2 border-white w-4/4 my-4 mb-8" />
         <h2 className="text-4xl font-semibold mb-4">Welcome to TaskFlow</h2>
@@ -46,7 +46,7 @@ export default function Login() {
         {/* Login Form */}
         <form
           action={loginAction}
-          onSubmit={handleLogin}
+          //onSubmit={handleLogin}
           className="w-[300px] flex flex-col items-center"
         >
             <h3 className="mb-6 text-2xl text-gray-800 font-medium">User Login</h3>
@@ -54,21 +54,29 @@ export default function Login() {
             {/* Username */}
             <input
                 type="text"
+                name="username"
                 placeholder="Enter User Name"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full mb-6 px-4 py-3 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
             />
+            {state?.errors?.username && (
+                <p className="mt-2 text-sm text-red-600">{state.errors.username}</p>
+            )}
 
             {/* Password */}
             <div className="relative w-full mb-5">
                 <input
                     type={showPassword ? "text" : "password"}
+                    name="password"
                     placeholder="Enter Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-3 pr-10 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
                 />
+                {state?.errors?.password && (
+                    <p className="mt-2 text-sm text-red-600">{state.errors.password[0]}</p>
+                )}
 
                 {/* 👁 Show/Hide Button */}
                 <button
@@ -115,12 +123,7 @@ export default function Login() {
   );
 }
 
-function SubmitButton(){
-    const { pending }= useFormStatus();
-    return(
-        <button disabled={pending} type="submit">
-            Login
-        </button>
-    );  
-}
+
+
+
 
