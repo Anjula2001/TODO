@@ -2,7 +2,7 @@ import React from 'react'
 
 function page() {
   return (
-    <div>Today page</div>
+    <div>add task page</div>
   )
 }
 
