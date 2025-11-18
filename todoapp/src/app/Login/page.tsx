@@ -3,9 +3,10 @@
 import { useActionState, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react"; 
 //import {useFormStatus} from "react-dom"; 
-import { login } from "./actions";
+import { login } from "@/lib/actions";
 
 export default function LoginForm() {
+    
   const [state, loginAction] = useActionState(login, undefined);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

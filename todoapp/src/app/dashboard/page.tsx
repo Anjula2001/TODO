@@ -1,9 +1,7 @@
-"use client";
-
-export default function Page() {
+export default function DashboardPage() {
   return (
-    <div style={{ display: "flex", justifyContent: "center", paddingTop: "100px" }}>
-      <h1>Hello User</h1>
+    <div>
+      <h1>Dashboard</h1>
     </div>
   );
 }

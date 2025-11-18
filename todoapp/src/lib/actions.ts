@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import{ z } from "zod";
 
 const testUser ={
+    id: "",
     username:"testuser",
     password:"Test@123",
 };
@@ -16,7 +17,10 @@ const loginSchema = z.object({
 
 export async function login(prevState: any, formData: FormData){
     
-    const result = loginSchema.safeParse(Object.fromEntries(formData));
+    const result = loginSchema.safeParse({
+        username: formData.get("username"),
+        password: formData.get("password"),
+    });
 
     if(!result.success){
         return{
@@ -34,7 +38,7 @@ export async function login(prevState: any, formData: FormData){
         };
     }
 
-    await createSession(testUser.username);
+    await createSession(testUser.id);
 
     redirect("/dashboard");
 } 
