@@ -32,3 +32,10 @@ const MILLISECONDS_IN_DAY = 86400000;
 }
 
 export default Page
+export default function DashboardPage() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+    </div>
+  );
+}
