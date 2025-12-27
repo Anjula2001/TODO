@@ -2,18 +2,20 @@
 
 import { useActionState, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react"; 
-
+//import {useFormStatus} from "react-dom"; 
+import { login } from "@/lib/actions";
 
 export default function LoginForm() {
- 
+    
+  const [state, loginAction] = useActionState(login, undefined);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  /*const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Username:", username, "Password:", password);
-  };
+  };*/
 
   return (
     <div className="flex min-h-screen bg-white">
@@ -44,6 +46,8 @@ export default function LoginForm() {
 
         {/* Login Form */}
         <form
+          action={loginAction}
+          //onSubmit={handleLogin}
           className="w-[300px] flex flex-col items-center"
         >
             <h3 className="mb-6 text-2xl text-gray-800 font-medium">User Login</h3>
@@ -57,7 +61,9 @@ export default function LoginForm() {
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full mb-6 px-4 py-3 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
             />
-           
+            {state?.errors?.username && (
+                <p className="mt-2 text-sm text-red-600">{state.errors.username}</p>
+            )}
 
             {/* Password */}
             <div className="relative w-full mb-5">
@@ -69,7 +75,9 @@ export default function LoginForm() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-3 pr-10 rounded-lg bg-teal-100 placeholder-gray-600 focus:outline-none focus:text-black text-black"
                 />
-               
+                {state?.errors?.password && (
+                    <p className="mt-2 text-sm text-red-600">{state.errors.password[0]}</p>
+                )}
 
                 {/* 👁 Show/Hide Button */}
                 <button
@@ -115,13 +123,6 @@ export default function LoginForm() {
     </div>
   );
 }
-
-
-
-
-
-
-
 
 
 
